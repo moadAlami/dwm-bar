@@ -1,0 +1,18 @@
+#!/bin/env sh
+
+. "Scripts/timeDBAR"
+. "Scripts/dateDBAR"
+. "Scripts/batteryDBAR"
+. "Scripts/cpuDBAR"
+. "Scripts/brightnessDBAR"
+. "Scripts/memoryDBAR"
+. "Scripts/musicDBAR"
+
+
+while true
+do
+	xsetroot -name "$(musicDBAR)|$(memoryDBAR)|$(brightnessDBAR)|$(cpuDBAR)|$(batteryDBAR)|$(dateDBAR)|$(timeDBAR)"
+
+	sleep 1
+
+done
