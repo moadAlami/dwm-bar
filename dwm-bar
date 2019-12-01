@@ -1,5 +1,7 @@
 #!/bin/env sh
 
+# trap finish 1 3 6 15
+
 . "Scripts/timeDBAR"
 . "Scripts/dateDBAR"
 . "Scripts/batteryDBAR"
@@ -9,10 +11,20 @@
 . "Scripts/musicDBAR"
 
 
-while true
-do
-	xsetroot -name "$(musicDBAR)|$(memoryDBAR)|$(brightnessDBAR)|$(cpuDBAR)|$(batteryDBAR)|$(dateDBAR)|$(timeDBAR)"
+function dwmbar {
+	while true
+	do
+		xsetroot -name "$(musicDBAR)|$(memoryDBAR)|$(brightnessDBAR)|$(cpuDBAR)|$(batteryDBAR)|$(dateDBAR)|$(timeDBAR)"
 
-	sleep 1
+		sleep 5 &
+		echo $! > dwmpid
+		 wait $!
 
-done
+	done
+}
+
+
+# function finish {
+# 	xsetroot -name "$(musicDBAR)|$(memoryDBAR)|$(brightnessDBAR)|$(cpuDBAR)|$(batteryDBAR)|$(dateDBAR)|$(timeDBAR)"
+# }
+dwmbar

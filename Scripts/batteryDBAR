@@ -51,7 +51,6 @@ batteryDBAR () {
 	else
 		printf " ^c#FF0000^^d^ "
 	fi
-
 }
 
 batteryDBAR

@@ -1,7 +1,7 @@
-#!/bin/env sh
+#!/usr/bin/env sh
 
 dateDBAR () {
-printf " ^c#1ddad7^ ^d^$(date '+%a %d %b') "
+	printf " ^c#1ddad7^ ^d^$(date '+%a %d %b') "
 }
 
 dateDBAR

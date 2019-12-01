@@ -2,7 +2,6 @@
 
 musicDBAR () {
 	if ! [[ "$(playerctl status 2>&1)" = "No players found" ]];then
-
 		playIcon="^c#12de41^^d^";
 		pauseIcon="^c#DA5F05^^d^";
 		stopIcon="^c#DA5F05^^d^";
