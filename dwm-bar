@@ -1,24 +1,25 @@
-#!/bin/env sh
+#!/usr/bin/env sh
 
 # trap finish 1 3 6 15
 
-. "Scripts/timeDBAR"
-. "Scripts/dateDBAR"
-. "Scripts/batteryDBAR"
-. "Scripts/cpuDBAR"
-. "Scripts/brightnessDBAR"
-. "Scripts/memoryDBAR"
-. "Scripts/musicDBAR"
+. "$HOME/github/dwm-bar/Scripts/timeDBAR"
+. "$HOME/github/dwm-bar/Scripts/dateDBAR"
+. "$HOME/github/dwm-bar/Scripts/batteryDBAR"
+. "$HOME/github/dwm-bar/Scripts/cpuDBAR"
+. "$HOME/github/dwm-bar/Scripts/brightnessDBAR"
+. "$HOME/github/dwm-bar/Scripts/memoryDBAR"
+. "$HOME/github/dwm-bar/Scripts/musicDBAR"
+. "$HOME/github/dwm-bar/Scripts/volumeDBAR"
 
 
 function dwmbar {
 	while true
 	do
-		xsetroot -name "$(musicDBAR)|$(memoryDBAR)|$(brightnessDBAR)|$(cpuDBAR)|$(batteryDBAR)|$(dateDBAR)|$(timeDBAR)"
+		xsetroot -name "$(musicDBAR)|$(memoryDBAR)|$(brightnessDBAR)|$(volumeDBAR)|$(cpuDBAR)|$(batteryDBAR)|$(dateDBAR)|$(timeDBAR)"
 
-		sleep 5 &
-		echo $! > dwmpid
-		 wait $!
+		sleep 60 &
+		echo $! > $HOME/github/dwm-bar/dwmpid
+		wait $!
 
 	done
 }
