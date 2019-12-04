@@ -17,7 +17,7 @@ musicDBAR () {
 		songDuration="";
 		elapsedTime=$(playerctl metadata --format "{{ duration(position) }}");
 		songLength=$(playerctl metadata --format "{{ duration(mpris:length) }}");
-		songDuration="($elapsedTime/$songLength)";
+		# songDuration="($elapsedTime/$songLength)";
 
 		if [[ "${playerStatus^}" = "Paused" ]]; then
 			echo " $songInfo$songDuration $pauseIcon ";
