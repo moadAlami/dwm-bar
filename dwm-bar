@@ -10,14 +10,15 @@
 . "$HOME/github/dwm-bar/Scripts/memoryDBAR"
 . "$HOME/github/dwm-bar/Scripts/musicDBAR"
 . "$HOME/github/dwm-bar/Scripts/volumeDBAR"
+. "$HOME/github/dwm-bar/Scripts/numlockDBAR"
 
 
 function dwmbar {
 	while true
 	do
-		xsetroot -name "$(musicDBAR)|$(memoryDBAR)|$(brightnessDBAR)|$(volumeDBAR)|$(cpuDBAR)|$(batteryDBAR)|$(dateDBAR)|$(timeDBAR)"
+		xsetroot -name "$(musicDBAR)|$(memoryDBAR)|$(brightnessDBAR)|$(volumeDBAR)|$(cpuDBAR)|$(batteryDBAR)|$(dateDBAR)|$(timeDBAR)|$(numlockDBAR)"
 
-		sleep 60 &
+		sleep 10 &
 		echo $! > $HOME/github/dwm-bar/dwmpid
 		wait $!
 
