@@ -1,0 +1,12 @@
+#!/bin/env sh
+
+
+networkDBAR () {
+	[ "$(cat /sys/class/net/w*/operstate)" = 'down' ] && wifiicon="^c#FF0000^^d^"
+
+	[ ! -n "${wifiicon+var}" ] && wifiicon=$(grep "^\s*w" /proc/net/wireless | awk '{ print "^c#00FF00^^d^", int($3 * 100 / 70) "%" }')
+
+	echo " $wifiicon $(cat /sys/class/net/e*/operstate | sed "s/down/^c#FF0000^^d^/;s/up/^c#00FF00^^d^/") "
+}
+
+networkDBAR
