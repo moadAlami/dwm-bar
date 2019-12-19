@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 musicDBAR () {
-	if ! [[ "$(playerctl status 2>&1)" = "No players found" ]];then
+	if ! [[ "$(cmus-remote -Q 2>&1)" = "cmus-remote: cmus is not running" ]];then
 		playIcon="^c#12de41^^d^";
 		pauseIcon="^c#DA5F05^^d^";
 		stopIcon="^c#DA5F05^^d^";
@@ -10,7 +10,6 @@ musicDBAR () {
 		songArtist="$(playerctl metadata artist)";
 
 		fname=$(cmus-remote -Q | awk -v FS='/' '/^file/ {print $NF}' | sed "s/.mp3//;s/\&/and/;s/\[HD\]//");
-
 		songArtist="${songArtist:-$fname}";
 		songTitle=$(playerctl metadata title);
 		songInfo="$songArtist - $songTitle";
