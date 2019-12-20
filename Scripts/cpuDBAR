@@ -12,7 +12,7 @@ cpuDBAR () {
 	if [[ $temp -ge $crit ]];then
 		color="#FF0000"
 		therm=""
-	elif [[ $temp -ge $crit ]];then
+	elif [[ $temp -ge $warn ]];then
 		color="#FFFC00"
 		therm=""
 	fi
