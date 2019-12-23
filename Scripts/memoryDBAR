@@ -11,15 +11,15 @@ memoryDBAR () {
 
 	perc=$(echo "scale=1;$used*100/$total" | bc)
 
-	if [[ $perc -ge 85 ]];then
+	if [[ 1 -eq "$(echo "$perc > 85" | bc)" ]];then
 		color="#FF0000"
-	elif [[ $perc -ge 70 ]];then
+	elif [[ 1 -eq "$(echo "$perc > 70" | bc)" ]];then
 		color="#FFAE00"
-	elif [[ $perc -ge 50 ]];then
+	elif [[ 1 -eq "$(echo "$perc > 50" | bc)" ]];then
 		color="#FFF600"
-	elif [[ $perc -ge 30 ]];then
+	elif [[ 1 -eq "$(echo "$perc > 30" | bc)" ]];then
 		color="#A8FF00"
-	elif [[ $perc -ge 15 ]];then
+	elif [[ 1 -eq "$(echo "$perc > 15" | bc)" ]];then
 		color="#A8FF00"
 	else
 		color="#FFFFFF"
