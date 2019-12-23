@@ -6,7 +6,13 @@ networkDBAR () {
 
 	[ ! -n "${wifiicon+var}" ] && wifiicon=$(grep "^\s*w" /proc/net/wireless | awk '{ print "^c#00FF00^^d^", int($3 * 100 / 70) "%" }')
 
-	echo " $wifiicon $(cat /sys/class/net/e*/operstate | sed "s/down/^c#FF0000^^d^/;s/up/^c#00FF00^^d^/") "
+	wiredicon=$(cat /sys/class/net/e*/operstate | sed "s/down/^c#FF0000^^d^/;s/up/^c#00FF00^^d^/") 
+	 
+	if [[ "$wifiicon" = '^c#FF0000^^d^' ]];then 
+		echo " $wifiicon $wiredicon "
+	else
+		echo " $wifiicon "
+	fi
 }
 
 networkDBAR
