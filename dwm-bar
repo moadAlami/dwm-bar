@@ -18,7 +18,7 @@
 function dwmbar {
 	while true
 	do
-		xsetroot -name "$(musicDBAR)|$(networkDBAR)| $(torrentDBAR) |$(memoryDBAR)|$(brightnessDBAR)|$(volumeDBAR)|$(cpuDBAR)|$(batteryDBAR)|$(dateDBAR)|$(timeDBAR)|$(numlockDBAR)"
+		xsetroot -name "$(musicDBAR)|$(networkDBAR)| $(torrentDBAR)|$(memoryDBAR)|$(brightnessDBAR)|$(volumeDBAR)|$(cpuDBAR)|$(batteryDBAR)|$(dateDBAR)|$(timeDBAR)|$(numlockDBAR)"
 
 		sleep 1 &
 		echo $! > $HOME/github/dwm-bar/dwmpid
