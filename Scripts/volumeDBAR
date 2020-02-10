@@ -6,9 +6,8 @@ volumeDBAR () {
 	sp2=
 	spmute=
 	
-	toggle=$(amixer get Master | tail -n 1 | awk '{print $6}' | sed 's/\[//;s/\]//')
-
-	declare -i vol=$(amixer get Master | tail -n 1 | awk '{print $4}' | sed 's|\[||;s|\%||;s|\]||')
+	toggle=$(amixer | awk '/^  Front Left: Playback/ {print $6}' | sed 's/\[//;s/\]//')
+	declare -i vol=$(amixer | awk '/^  Front Left: Playback/ {print $5}' | sed 's/\[//;s/\]//;s/\%//')
 
 	if [[ "$toggle" == "on" ]];then
 		if [[ $vol -le 50 ]]
