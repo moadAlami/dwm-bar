@@ -1,21 +1,18 @@
 #!/usr/bin/env sh
 
 musicDBAR () {
-	# if ! [[ "$(cmus-remote -Q 2>&1)" = "cmus-remote: cmus is not running" ]];then
-	if ! [[ "$(playerctl metadata 2>&1)" = "No players found" ]];then
+	if ! [[ "$(cmus-remote -Q 2>&1)" = "cmus-remote: cmus is not running" ]];then
 		playIcon="^c#12de41^^d^";
 		pauseIcon="^c#DA5F05^^d^";
 		stopIcon="^c#DA5F05^^d^";
 
 		playerStatus=$(playerctl status);
 		songArtist="$(playerctl metadata artist)";
-		if ! [[ "$(cmus-remote -Q 2>&1)" = "cmus-remote: cmus is not running" ]];then
 			fname=$(cmus-remote -Q | awk -v FS='/' '/^file/ {print $NF}' | sed "s/.mp3//;s/\&/and/;s/\[HD\]//");
-			songDuration="";
-			elapsedTime=$(playerctl metadata --format "{{ duration(position) }}");
-			songLength=$(playerctl metadata --format "{{ duration(mpris:length) }}");
-			songDuration=" [$elapsedTime/$songLength]";
-		fi
+		songDuration="";
+		elapsedTime=$(playerctl metadata --format "{{ duration(position) }}");
+		songLength=$(playerctl metadata --format "{{ duration(mpris:length) }}");
+		songDuration=" [$elapsedTime/$songLength]";
 		songArtist="${songArtist:-$fname}";
 		songTitle=$(playerctl metadata title);
 		songInfo="$songArtist - $songTitle";
