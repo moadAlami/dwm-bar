@@ -24,7 +24,7 @@ torrentDBAR () {
 							s/N/^c#00FF00^✔^d^/g;
 							s/Z/^c#00FF00^🙐^d^/g" | awk '{print $2, $1}' | sed -e "s/ $//g" | tr '\n' ' '
 							if [[ "$(transmission-remote -l | grep Sum | awk '{print $2}')" -eq "None" ]];then
-								printf "^c$color^⓿ ^d^"
+								printf " ^c$color^⓿ ^d^"
 							fi
 						}
 
