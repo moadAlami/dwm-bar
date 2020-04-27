@@ -1,5 +1,6 @@
-#!/usr/bin/env sh
+#!/usr/bin/sh
 
+. "$HOME/github/dwm-bar/Scripts/bandwidth"
 . "$HOME/github/dwm-bar/Scripts/timeDBAR"
 . "$HOME/github/dwm-bar/Scripts/dateDBAR"
 . "$HOME/github/dwm-bar/Scripts/batteryDBAR"
@@ -9,20 +10,13 @@
 . "$HOME/github/dwm-bar/Scripts/musicDBAR"
 . "$HOME/github/dwm-bar/Scripts/volumeDBAR"
 . "$HOME/github/dwm-bar/Scripts/numlockDBAR"
-. "$HOME/github/dwm-bar/Scripts/torrentDBAR"
-. "$HOME/github/dwm-bar/Scripts/bandwidth"
+# . "$HOME/github/dwm-bar/Scripts/torrentDBAR"
 . "$HOME/github/dwm-bar/Scripts/musicDBAR"
 
-function dwmbar {
-	while true
-	do
-		xsetroot -name "$(musicDBAR)|$(bandwidth)|$(torrentDBAR)|$(memoryDBAR)|$(brightnessDBAR)|$(volumeDBAR)|$(cpuDBAR)|$(batteryDBAR)|$(dateDBAR)|$(timeDBAR)|$(numlockDBAR)"
-
-		sleep 1 &
+while true;do
+		xsetroot -name "$(musicDBAR)|$(bandwidth)|$(memoryDBAR)|$(brightnessDBAR)|$(volumeDBAR)|$(cpuDBAR)|$(batteryDBAR)|$(dateDBAR)|$(timeDBAR)|$(numlockDBAR)" 
+		sleep 1  &
 		echo $! > $HOME/github/dwm-bar/dwmpid
-		wait $!
-
+		wait $!  
 	done
-}
 
-dwmbar
