@@ -1,9 +1,9 @@
 #!/usr/bin/env sh
 
 volumeDBAR () {
-	sp0=
-	sp1=
-	sp2=
+	sp0=🔈
+	sp1=🔉
+	sp2=🔊
 	spmute=
 	
 	toggle=$(amixer | awk '/^  Front Left: Playback/ {print $6}' | sed 's/\[//;s/\]//')
