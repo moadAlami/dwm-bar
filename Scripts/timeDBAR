@@ -1,6 +1,0 @@
-#!/usr/bin/env sh
-
-timeDBAR () {
-	printf " ^c#f0e410^^d^$(date '+%H:%M') "
- }
-timeDBAR

@@ -1,8 +1,0 @@
-#!/usr/bin/env sh
-
-brightnessDBAR () {
-	brightness=$(printf "%.0f" "$(xbacklight -get)")
-	printf " ^c#ebd221^^d^ $brightness%% "
-}
-
-brightnessDBAR
