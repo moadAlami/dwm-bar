@@ -160,7 +160,7 @@ function pacupgrade {
 	if [[ "$up" == 0 ]];then
 		echo " ^c#00FF00^^d^ "
 	else
-		echo " ^c#FFF60^$up^d^ "
+		echo " ^c#FFF600^ $up^d^ "
 	fi
 }
 
