@@ -130,7 +130,7 @@ function battery {
 
 function brightness {
 	brightness=$(printf "%.0f" "$(xbacklight -get)")
-	printf " ^c#ebd221^^d^ $brightness%% "
+	printf " 💡 $brightness%% "
 }
 
 
@@ -153,20 +153,8 @@ function cpu {
 	printf " ^c$color^$therm $temp°C^d^ "
 }
 
-
-function pacupgrade {
-	up=$(pacman -Qu | wc -l)
-
-	if [[ "$up" == 0 ]];then
-		echo " ^c#00FF00^^d^ "
-	else
-		echo " ^c#FFF600^ $up^d^ "
-	fi
-}
-
-
-function Date {
-	printf " ^c#1ddad7^ ^d^$(date '+%a %d %b') "
+function datetime {
+	printf " $(date '+%a %d %b %H:%M') "
 }
 
 
@@ -257,9 +245,6 @@ function numlock {
 }
 
 
-function temps {
-	printf " ^c#f0e410^^d^$(date '+%H:%M') "
- }
 
 
 function torrent {
@@ -295,33 +280,41 @@ function volume {
 	sp0=🔈
 	sp1=🔉
 	sp2=🔊
-	spmute=
-	
+	spmute=🔇 
+
 	toggle=$(amixer | awk '/^  Front Left: Playback/ {print $6}' | sed 's/\[//;s/\]//')
 	declare -i vol=$(amixer | awk '/^  Front Left: Playback/ {print $5}' | sed 's/\[//;s/\]//;s/\%//')
 
-	if [[ "$toggle" == "on" ]];then
-		if [[ $vol -le 50 ]]
+	if [[ $vol -le 50 ]]
+	then
+		if [[ $vol -le 5 ]]
 		then
-			if [[ $vol -le 5 ]]
-			then
-				icon=$sp0
-			else
-				icon=$sp1
-			fi
+			icon=$sp0
 		else
-			icon=$sp2
+			icon=$sp1
 		fi
 	else
-		icon=$spmut
+		icon=$sp2
 	fi
 
-	printf " $icon $vol%% "
+	if [[ "$toggle" == "on" ]];then
+		printf " $icon $vol%% "
+	else
+		echo " $spmute $vol% "
+	fi
 }
 
+function email {
+	declare -i new=$(du -a ~/.local/share/mail/*/INBOX/new/* 2>/dev/null | sed -n '$=')
+	if [[ "$new" == 0 ]];then
+		printf " 📭 "
+	else
+		printf " $new 📬 "
+	fi
+}
 
 while true;do
-	xsetroot -name "$(music)|$(bandwidth)|$(memory)|$(brightness)|$(volume)|$(cpu)|$(battery)|$(pacupgrade)|$(Date)|$(temps)|$(numlock)" 
+	xsetroot -name "$(music)|$(bandwidth)|$(memory)|$(brightness)|$(email)|$(volume)|$(cpu)|$(battery)|$(datetime)|$(numlock)" 
 		sleep 1  &
 		echo $! > $HOME/github/dwm-bar/dwmpid
 		wait $!
