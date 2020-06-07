@@ -130,7 +130,7 @@ function battery {
 
 function brightness {
 	brightness=$(printf "%.0f" "$(xbacklight -get)")
-	printf " 💡 $brightness%% "
+	printf " 💡$brightness%% "
 }
 
 
@@ -186,37 +186,18 @@ function memory {
 	printf " ^c$color^ $perc%%^d^ "
 }
 
-
-function music {
-	if ! [[ "$(cmus-remote -Q 2>&1)" = "cmus-remote: cmus is not running" ]];then
-		playIcon="^c#12de41^^d^";
-		pauseIcon="^c#DA5F05^^d^";
-		stopIcon="^c#DA5F05^^d^";
-
-		playerStatus=$(playerctl status);
-		songArtist="$(playerctl metadata artist)";
-			fname=$(cmus-remote -Q | awk -v FS='/' '/^file/ {print $NF}' | sed "s/.mp3//;s/\&/and/;s/\[HD\]//");
-		songDuration="";
-		elapsedTime=$(playerctl metadata --format "{{ duration(position) }}");
-		songLength=$(playerctl metadata --format "{{ duration(mpris:length) }}");
-		songDuration=" [$elapsedTime/$songLength]";
-		songArtist="${songArtist:-$fname}";
-		songTitle=$(playerctl metadata title);
-		songInfo="$songArtist - $songTitle";
-
-
-		if [[ "${playerStatus^}" = "Paused" ]]; then
-			echo " $songInfo$songDuration $pauseIcon ";
-		elif [[ "${playerStatus^}" = "Playing" ]]; then
-			echo " $songInfo$songDuration ";
-		elif [[ "${playerStatus^}" = "Stopped" ]]; then
-			echo " Stopped $stopIcon ";
+function mpd {
+	if [[ "$(mpc | wc -l)" == 3 ]];then if mpc | grep playing >/dev/null;then
+			icon="^c#12de41^^d^"
+		elif mpc | grep paused >/dev/null;then
+			icon="^c#DA5F05^^d^"
 		fi
+
+		echo " $(mpc | sed "/^volume:/d;s/\\[.*\\]\ *\\#[0-9]*\\/[0-9]*[ ]*/\\[/;s/[ ]*(.*/\\] $icon/;s/[ ]*(.*/\\]/" | paste -sd ' ') "
 	fi
 }
-
-
-function networ {
+	
+function network {
 	[ "$(cat /sys/class/net/w*/operstate)" = 'down' ] && wifiicon="^c#FF0000^^d^"
 
 	[ ! -n "${wifiicon+var}" ] && wifiicon=$(grep "^\s*w" /proc/net/wireless | awk '{ print "^c#00FF00^^d^", int($3 * 100 / 70) "%" }')
@@ -243,9 +224,6 @@ function numlock {
 	printf " ^c$color^^d^ "
 
 }
-
-
-
 
 function torrent {
 
@@ -314,8 +292,8 @@ function email {
 }
 
 while true;do
-	xsetroot -name "$(music)|$(bandwidth)|$(memory)|$(brightness)|$(email)|$(volume)|$(cpu)|$(battery)|$(datetime)|$(numlock)" 
-		sleep 1  &
+	xsetroot -name "$(mpd)|$(bandwidth)|$(memory)|$(brightness)|$(email)|$(volume)|$(cpu)|$(battery)|$(datetime)|$(numlock)" 
+		sleep 1 &
 		echo $! > $HOME/github/dwm-bar/dwmpid
 		wait $!
 	done
