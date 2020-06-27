@@ -110,14 +110,17 @@ function battery {
 		elif [[ "$state" == "Unknown" ]];then
 			color="#FFFFFF"
 			bat='  '
-		elif [[ "$state" == "Full" ]];then
 			bCase=2
+		elif [[ "$state" == "Full" ]];then
+			bCase=3
 			notify-send -u critical "Battery Full"
 		fi
 
 		if [[ $bCase == 1 ]];then 
 			printf " ^c#FF0000^Low battery^d^ "
 		elif [[ $bCase == 2 ]];then
+			printf " ^c$color^$perc%%$bat^d^"
+		elif [[ $bCase == 3 ]];then
 			printf " ^c#FF0000^Battery full^d^ "
 		else 
 			printf " ^c$color^$perc%%$bat$time^d^ "
@@ -130,7 +133,7 @@ function battery {
 
 function brightness {
 	brightness=$(printf "%.0f" "$(xbacklight -get)")
-	printf " 💡$brightness%% "
+	printf " 💡 $brightness%% "
 }
 
 
@@ -183,17 +186,18 @@ function memory {
 		color="#FFFFFF"
 	fi
 
-	printf " ^c$color^ $perc%%^d^ "
+	# printf " ^c$color^ $perc%%^d^ "
+	printf " 🗄 ^c$color^$perc%%^d^ "
 }
 
 function mpd {
 	if [[ "$(mpc | wc -l)" == 3 ]];then if mpc | grep playing >/dev/null;then
-			icon="^c#12de41^^d^"
+			icon=''
 		elif mpc | grep paused >/dev/null;then
-			icon="^c#DA5F05^^d^"
+			icon=" ⏸"
 		fi
 
-		echo " $(mpc | sed "/^volume:/d;s/\\[.*\\]\ *\\#[0-9]*\\/[0-9]*[ ]*/\\[/;s/[ ]*(.*/\\] $icon/;s/[ ]*(.*/\\]/" | paste -sd ' ') "
+		echo " $(mpc | sed "/^volume:/d;s/\\[.*\\]\ *\\#[0-9]*\\/[0-9]*[ ]*/\\[/;s/[ ]*(.*/\\]$icon/;s/[ ]*(.*/\\]/" | paste -sd ' ') "
 	fi
 }
 	
@@ -290,9 +294,10 @@ function email {
 		printf " $new 📬 "
 	fi
 }
+delim="/"
 
 while true;do
-	xsetroot -name "$(mpd)|$(bandwidth)|$(memory)|$(brightness)|$(email)|$(volume)|$(cpu)|$(battery)|$(datetime)|$(numlock)" 
+	xsetroot -name "$(mpd)$delim$(bandwidth)$delim$(memory)$delim$(brightness)$delim$(email)$delim$(volume)$delim$(cpu)$delim$(battery)$delim$(datetime)$delim$(numlock)" 
 		sleep 1 &
 		echo $! > $HOME/github/dwm-bar/dwmpid
 		wait $!
