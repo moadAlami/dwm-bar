@@ -193,11 +193,11 @@ function memory {
 function mpd {
 	if [[ "$(mpc | wc -l)" == 3 ]];then if mpc | grep playing >/dev/null;then
 			icon=''
-		elif mpc | grep paused >/dev/null;then
-			icon=" ⏸"
+		else 
+			icon="⏸ "
 		fi
 
-		echo " $(mpc | sed "/^volume:/d;s/\\[.*\\]\ *\\#[0-9]*\\/[0-9]*[ ]*/\\[/;s/[ ]*(.*/\\]$icon/;s/[ ]*(.*/\\]/" | paste -sd ' ') "
+		echo "$(ncmpcpp -q --current-song='{{%a - }%t}|{%f}') $(ncmpcpp -q --current-song='[%l]') $icon"
 	fi
 }
 	
