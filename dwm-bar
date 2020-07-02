@@ -197,7 +197,7 @@ function mpd {
 			icon="⏸ "
 		fi
 
-		echo "$(ncmpcpp -q --current-song='{{%a - }%t}|{%f}') $(ncmpcpp -q --current-song='[%l]') $icon"
+		echo "$(ncmpcpp -q --current-song='{{%a - }%t}|{%f}') $icon"
 	fi
 }
 	
