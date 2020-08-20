@@ -113,7 +113,7 @@ function battery {
 			bCase=2
 		elif [[ "$state" == "Full" ]];then
 			bCase=3
-			notify-send -u critical "Battery Full"
+			# notify-send -u critical "Battery Full"
 		fi
 
 		if [[ $bCase == 1 ]];then 
@@ -197,7 +197,7 @@ function mpd {
 			icon="⏸ "
 		fi
 
-		echo "$(ncmpcpp -q --current-song='{{%a - }%t}|{%f}') $icon"
+		echo " $(ncmpcpp -q --current-song='{{%a - }%t}|{%f}') $icon"
 	fi
 }
 	
@@ -297,7 +297,7 @@ function email {
 delim="/"
 
 while true;do
-	xsetroot -name "$(mpd)$delim$(bandwidth)$delim$(memory)$delim$(brightness)$delim$(email)$delim$(volume)$delim$(cpu)$delim$(battery)$delim$(datetime)$delim$(numlock)" 
+	xsetroot -name "$(bandwidth)$delim$(memory)$delim$(brightness)$delim$(email)$delim$(volume)$delim$(cpu)$delim$(battery)$delim$(datetime)$delim$(numlock)" 
 		sleep 1 &
 		echo $! > $HOME/github/dwm-bar/dwmpid
 		wait $!
