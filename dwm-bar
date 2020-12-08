@@ -297,7 +297,7 @@ function email {
 delim="/"
 
 while true;do
-	xsetroot -name "$(bandwidth)$delim$(memory)$delim$(brightness)$delim$(email)$delim$(volume)$delim$(cpu)$delim$(battery)$delim$(datetime)$delim$(numlock)" 
+	xsetroot -name "$(mpd)$delim$(bandwidth)$delim$(memory)$delim$(brightness)$delim$(email)$delim$(volume)$delim$(cpu)$delim$(battery)$delim$(datetime)$delim$(numlock)" 2> ~/.config/dwm-bar.log
 		sleep 1 &
 		echo $! > $HOME/github/dwm-bar/dwmpid
 		wait $!
