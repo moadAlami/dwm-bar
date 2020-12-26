@@ -248,12 +248,12 @@ function torrent {
 				sort -h | uniq -c | sed " # Now we replace the standin letters with icons.
 							s/A/^c#FF0000^⏹^d^/g;
 							s/B/^c#ffa500^⧗^d^/g;
-							s/L/^c#1DDAD7^^d^/g;
-							s/M/^c#1DDAD7^^d^/g;
-							s/N/^c#00FF00^✔^d^/g;
+							s/L/^c#1DDAD7^⬇^d^/g;
+							s/M/^c#1DDAD7^⬇^d^/g;
+							s/N/^c#00FF00^✅^d^/g;
 							s/Z/^c#00FF00^🙐^d^/g" | awk '{print $2, $1}' | sed -e "s/ $//g" | tr '\n' ' '
 							if [[ "$(transmission-remote -l | grep Sum | awk '{print $2}')" -eq "None" ]];then
-								printf " ^c$color^⓿ ^d^ "
+								printf "^c$color^⓿ ^d^"
 							fi
 }
 
@@ -297,7 +297,7 @@ function email {
 delim="/"
 
 while true;do
-	xsetroot -name "$(mpd)$delim$(bandwidth)$delim$(memory)$delim$(brightness)$delim$(email)$delim$(volume)$delim$(cpu)$delim$(battery)$delim$(datetime)$delim$(numlock)" 2> ~/.config/dwm-bar.log
+	xsetroot -name "$(mpd)$delim$(bandwidth)$delim $(torrent)$delim$(memory)$delim$(brightness)$delim$(email)$delim$(volume)$delim$(cpu)$delim$(battery)$delim$(datetime)$delim$(numlock)" 2> ~/.config/dwm-bar.log
 		sleep 1 &
 		echo $! > $HOME/github/dwm-bar/dwmpid
 		wait $!
