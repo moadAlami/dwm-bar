@@ -113,7 +113,6 @@ function battery {
 			bCase=2
 		elif [[ "$state" == "Full" ]];then
 			bCase=3
-			# notify-send -u critical "Battery Full"
 		fi
 
 		if [[ $bCase == 1 ]];then 
@@ -123,7 +122,7 @@ function battery {
 		elif [[ $bCase == 3 ]];then
 			printf " ^c#FF0000^Battery full^d^ "
 		else 
-			printf " ^c$color^$perc%%$bat$time^d^ "
+			printf " ^c$color^$perc%%$bat^d^"
 		fi
 	else
 		printf " ^c#FF0000^^d^ "
