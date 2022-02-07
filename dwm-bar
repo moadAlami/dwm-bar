@@ -142,7 +142,7 @@ function cpu {
 	therm=""
 	color="#FFFFFF"
 	  
-	declare -i temp=$(sensors acpitz-acpi-0 | awk -F "['+.']" '/^temp1/ {print $2}')
+	declare -i temp=$(sensors | awk -F "['+.']" '/^temp1/ {print $2}')
 
 	if [[ $temp -ge $crit ]];then
 		color="#FF0000"
@@ -198,6 +198,10 @@ function mpd {
 
 		echo " $(ncmpcpp -q --current-song='{{%a - }%t}|{%f}') $icon"
 	fi
+}
+
+function radio {
+	echo " $(sed -n '3p' /home/mouad/.cache/classic-radio-name | awk -F: '{ print $2 }') "
 }
 	
 function network {
@@ -296,7 +300,7 @@ function email {
 delim="/"
 
 while true;do
-	xsetroot -name "$(mpd)$delim$(bandwidth)$delim $(torrent)$delim$(memory)$delim$(brightness)$delim$(email)$delim$(volume)$delim$(cpu)$delim$(battery)$delim$(datetime)$delim$(numlock)" 2> ~/.config/dwm-bar.log
+	xsetroot -name "$delim$(bandwidth)$delim $(torrent)$delim$(memory)$delim$(email)$delim$(volume)$delim$(cpu)$delim$(datetime)$delim$(numlock)" 2> ~/.config/dwm-bar.log
 		sleep 1 &
 		echo $! > $HOME/github/dwm-bar/dwmpid
 		wait $!
