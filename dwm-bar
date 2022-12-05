@@ -255,9 +255,9 @@ function torrent {
 							s/M/^c#1DDAD7^⬇^d^/g;
 							s/N/^c#00FF00^✅^d^/g;
 							s/Z/^c#00FF00^🙐^d^/g" | awk '{print $2, $1}' | sed -e "s/ $//g" | tr '\n' ' '
-							if [[ "$(transmission-remote -l | grep Sum | awk '{print $2}')" -eq "None" ]];then
-								printf "^c$color^⓿ ^d^"
-							fi
+							# if [[ "$(transmission-remote -l | grep Sum | awk '{print $2}')" -eq "None" ]];then
+							# 	printf "^c$color^⓿ ^d^"
+							# fi
 }
 
 
@@ -300,36 +300,30 @@ function email {
 
 function bluetooth {
 	declare -i perc=$(journalctl -b --user-unit pulseaudio -g "Battery Level" -o cat | tail -n 1 | awk '{ print $3 }' | sed s/%//)
-	icon='  '
-		if [[ $perc -le 5 ]];then
-			bCase=1
-			notify-send -u critical "$perc% Low battery $time" -h string:x-canonical-private-synchronous:anything
-		elif [[ $perc -le 15 ]];then
-			color="#FF0000"
-			notify-send -u critical "$icon$perc% Low battery $time" -h string:x-canonical-private-synchronous:anything
-		elif [[ $perc -le 30 ]];then
-			color="#FFAE00"
-		elif [[ $perc -le 50 ]];then
-			color="#FFF600"
-		elif [[ $perc -le 75 ]];then
-			color="#A8FF00"
-		elif [[ $perc -le 100 ]];then
-			color="#A8FF00"
-		fi
+	icon=' ^c#00aaff^^d^ '
+	if [[ $perc -le 15 ]];then
+		color="#FF0000"
+	elif [[ $perc -le 30 ]];then
+		color="#FFAE00"
+	elif [[ $perc -le 50 ]];then
+		color="#FFF600"
+	elif [[ $perc -le 75 ]];then
+		color="#A8FF00"
+	elif [[ $perc -le 100 ]];then
+		color="#A8FF00"
+	fi
 
-		if [[ "$(bluetoothctl info)" == "Missing device address argument" ]];then
-			printf " ^c#FF0000^$icon^d^"
-		else
-			printf " ^c$color^$icon$perc%%^d^ "
-		fi
-
-
+	if [[ "$(bluetoothctl info)" == "Missing device address argument" ]];then
+		printf " ^c#FF0000^^d^ "
+	else
+	printf " $icon^c$color^$perc%%^d^ " 
+	fi
 }
 
 delim="/"
 
 while true;do
-	xsetroot -name "$(bluetooth)$delim$(bandwidth)$delim $(torrent)$delim$(memory)$delim$(email)$delim$(volume)$delim$(cpu)$delim$(datetime)$delim$(numlock)" 2> ~/.config/dwm-bar.log
+	xsetroot -name "$(bluetooth)$delim$(bandwidth)$delim $(torrent)$delim$(memory)$delim$(email)$delim$(volume)$delim$(cpu)$delim$(datetime)$delim$(numlock)" >> ~/.config/dwm-bar.log
 		sleep 1 &
 		echo $! > $HOME/github/dwm-bar/dwmpid
 		wait $!
